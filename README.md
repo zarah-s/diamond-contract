@@ -1,39 +1,28 @@
-[![Mentioned in Awesome Foundry](https://awesome.re/mentioned-badge-flat.svg)](https://github.com/crisgarner/awesome-foundry)
-# Foundry + Hardhat Diamonds
+# Deployents
 
-This is a mimimal template for [Diamonds](https://github.com/ethereum/EIPs/issues/2535) which allows facet selectors to be generated on the go in solidity tests!
+## Via Scripting
 
-## Installation
+### Deploy locally
 
-- Clone this repo
-- Install dependencies
+```
+forge script scripts/Deploy.s.sol:MyScript --fork-url http://localhost:8545 --broadcast
 
-```bash
-$ yarn && forge update
 ```
 
-### Compile
+### Deploy to Sepolia
 
-```bash
-$ npx hardhat compile
+```
+# To load the variables in the .env file
+source .env
+
+# To deploy and verify our contract
+forge script --chain sepolia script/NFT.s.sol:MyScript --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv
+
+
 ```
 
-## Deployment
+## Via Command Line
 
-### Hardhat
-
-```bash
-$ npx hardhat run scripts/deploy.js
 ```
-
-### Foundry
-
-```bash
-$ forge t
+forge create --rpc-url <your_rpc_url> --private-key <your_private_key> src/MyContract.sol:MyContract
 ```
-
-`Note`: A lot of improvements are still needed so contributions are welcome!!
-
-Bonus: The [DiamondLoupefacet](contracts/facets/DiamondLoupeFacet.sol) uses an updated [LibDiamond](contracts/libraries//LibDiamond.sol) which utilises solidity custom errors to make debugging easier especially when upgrading diamonds. Take it for a spin!!
-
-Need some more clarity? message me [on twitter](https://twitter.com/Timidan_x), Or join the [EIP-2535 Diamonds Discord server](https://discord.gg/kQewPw2)

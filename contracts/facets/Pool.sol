@@ -3,29 +3,29 @@ pragma solidity ^0.8.8;
 import "../libraries/PoolAppStorage.sol";
 import "../interfaces/IERC20.sol";
 
-contract Pool {
-    function list_user(address user, uint8 amount) external {
-        require(msg.sender == poolStorage().owner, "UNAUTHORIZED");
+error UNAUTHORIZED();
+error UNAUTHORIZEDD();
+uint8 constant poolcont = 5;
 
-        poolStorage().users[user] = amount;
+contract Pool {
+    uint256 i;
+    PoolAppStorage.Layout p;
+
+    function list_user(address user, uint8 amount) external {
+        require(msg.sender == p.owner, UNAUTHORIZED());
+
+        p.users[user] = amount;
     }
 
     function disburse() external {
-        for (uint i = 0; i < poolStorage().eligible_users.length; i++) {
-            uint amount = poolStorage().users[poolStorage().eligible_users[i]];
-            bool success = IERC20(poolStorage().token).transfer(
-                poolStorage().eligible_users[i],
+        for (uint i = 0; i < p.eligible_users.length; i++) {
+            uint amount = p.users[p.eligible_users[i]];
+            bool success = IERC20(p.token).transfer(
+                p.eligible_users[i],
                 amount
             );
 
             require(success);
         }
-    }
-
-    function poolStorage()
-        internal
-        returns (PoolAppStorage.Layout storage lll)
-    {
-        lll = PoolAppStorage.storaged();
     }
 }

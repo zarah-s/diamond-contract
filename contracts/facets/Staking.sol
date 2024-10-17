@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "../interfaces/IERC20.sol";
 import "../libraries/StakeAppStorage.sol";
 
-contract maxStake {
+contract Staking {
     function stake(uint _amount, uint8 _poolId) external {
         require(_poolId <= 2, "invalid pool");
         IERC20 naira = IERC20(stakingStorage().token);
